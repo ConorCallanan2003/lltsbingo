@@ -9,16 +9,17 @@ const data = [
   { id: 5, value: "TOY FALLS OVER", color: "#b93c74" },
   { id: 6, value: "TOY DOESN'T WORK", color: "#953737" },
   { id: 7, value: "PADDY IS HAVING MORE FUN THAN KIDS", color: "#24bcd7" },
-  { id: 8, value: "PADDY CHANGES JUMPER", color: "#e08e00" },
+  { id: 8, value: "CHILD GOES AWOL", color: "#7fcba1" },
   { id: 9, value: "ONE FOR EVERYONE ...", color: "#8704bf" },
   { id: 10, value: "CHILD DANCE GROUP", color: "#ff8454" },
-  { id: 11, value: "AWKWARD CHILD MEETS CELEB INTERACTION", color: "#83953b" },
+  { id: 11, value: "AWKWARD CHILD MEETS CELEB", color: "#83953b" },
   { id: 12, value: "TEARS (YOU)", color: "#0072a0" },
   { id: 13, value: "TEARS (CHILD)", color: "#590d88" },
   { id: 14, value: "THE AD BREAK LASTS AGES", color: "#3ac5a7" },
-  { id: 15, value: "CHILD GOES AWOL", color: "#7fcba1" },
+  { id: 15, value: "PADDY CHANGES JUMPER", color: "#e08e00" },
   { id: 16, value: "AUDIENCE MEMBER MAKES A WEIRD FACE", color: "#de4f4f" },
   { id: 17, value: "BOOK REVIEW AT HIGH SPEED", color: "#8033b7" },
+  { id: 18, value: "TOY MAKES LOUD NOISE", color: "#8033b7" },
 ];
 
 export default function App() {
