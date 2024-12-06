@@ -37,22 +37,25 @@ export default function App() {
 
   const addChosenItem = (item: number) => {
     if (chosenValues.length < 9) {
-      setChosenValues([...chosenValues, item]);
+      localStorage.setItem(
+        "chosenItems",
+        JSON.stringify([...chosenValues, item])
+      );
+      setChosenValues(JSON.parse(localStorage.getItem("chosenItems") || "[]"));
     }
-    localStorage.setItem("chosenItems", JSON.stringify(chosenValues));
   };
 
   const removeChosenItem = (item: number) => {
     setChosenValues((prev) => {
       const newList = prev.filter((value) => value !== item);
+      localStorage.setItem("chosenItems", JSON.stringify(newList));
       return newList;
     });
-    localStorage.setItem("chosenItems", JSON.stringify(chosenValues));
   };
 
   return (
     <div className="relative">
-      <div className="absolute w-full h-full">
+      <div className="absolute w-full h-full overflow-hidden">
         <section className="sleigh">
           <div className="santa">🦌</div>
           <div className="santa1">🦌</div>
@@ -119,26 +122,17 @@ export default function App() {
           </div>
         </section>
       </div>
-      <div className="w-screen h-screen relative flex flex-col justify-center items-center md:pb-0 pb-[80px]">
-        <div className="flex md:w-[780px] sm:pt-0 pb-4 w-full px-4 sm:px-0 justify-between z-10">
-          <button
-            onClick={() => {
-              setShowModal(true);
-            }}
-            className="text-3xl font-bold  w-[140px]  text-left"
-          >
-            CHOICES
-          </button>
-          <button
-            onClick={() => {
-              setCompletedItems([]);
-            }}
-            className="text-3xl font-bold  w-[140px] text-right"
-          >
-            RESET
-          </button>
-        </div>
-        <div className="grid grid-cols-3 justify-center gap-2 sm:gap-4">
+      <div className="w-screen h-screen relative flex flex-col justify-center items-center px-6 md:pb-0 pb-[80px]">
+        <img
+          width={70}
+          height={70}
+          src="hat.png"
+          className="sm:hidden absolute top-8 right-4"
+        />
+        <h1 className="pb-20 text-6xl font-bold text-white text-center">
+          TOY SHOW BINGO
+        </h1>
+        <div className="grid z-20 grid-cols-3 justify-center gap-2 sm:gap-4">
           {data
             .filter((item) => chosenValues.includes(item.id))
             .map((item) => {
@@ -157,16 +151,14 @@ export default function App() {
                         return [...prev, item.id];
                       })
                     }
-                    className={`px-4 border-[20px] border-green-600 bg-red-600 md:h-[250px] md:w-[250px] md:text-2xl text-sm text-center font-bold md:hover:scale-105 flex items-center justify-center select-none cursor-pointer rounded-2xl text-white duration-200 md:opacity-90 md:hover:opacity-100`}
-                    // style={{
-                    //   backgroundColor: item.color,
-                    // }}
+                    className={`px-4 border-[10px] md:border-[20px] border-green-600 bg-red-600 w-[110px] h-[110px] md:h-[250px] md:w-[250px] md:text-2xl text-xs text-center font-bold md:hover:scale-105 flex items-center justify-center select-none cursor-pointer rounded-2xl text-white duration-200 opacity-90 md:hover:opacity-100`}
                   >
                     {item.value}
                   </div>
                 </div>
               );
             })}
+
           {showModal && (
             <div
               onClick={() => {
@@ -174,7 +166,7 @@ export default function App() {
               }}
               className="absolute bg-transparent w-full h-full z-20 backdrop-blur-sm top-0 bottom-0 right-0 left-0 flex justify-center items-center"
             >
-              <div className="flex flex-col">
+              <div className="flex flex-col  w-5/6">
                 <div className="w-full -mb-4 pb-4 flex items-center justify-center pt-2 bg-gray-200 text-black cursor-pointer text-2xl font-bold rounded-t-2xl">
                   <h1 className="text-4xl pl-1 font-bold pb-3 pt-2">
                     CARDS ({chosenValues.length}/9)
@@ -182,7 +174,7 @@ export default function App() {
                 </div>
                 <div
                   onClick={(e) => e.stopPropagation()}
-                  className="w-[500px] z-40 p-1 bg-white rounded-xl shadow-2xl flex flex-col gap-1"
+                  className="md:w-[500px] w-full h-[500px] overflow-scroll z-40 p-1 bg-white rounded-xl shadow-2xl flex flex-col gap-1"
                 >
                   {data.map((item) => {
                     const chosen = chosenValues.includes(item.id);
@@ -226,6 +218,24 @@ export default function App() {
               </div>
             </div>
           )}
+        </div>
+        <div className="flex md:w-[780px] pt-4 gap-2 w-full sm:px-0 justify-between z-10">
+          <button
+            onClick={() => {
+              setShowModal(true);
+            }}
+            className="text-2xl bg-white md:text-3xl w-1/2 font-bold  text-center py-4 rounded-lg px-6"
+          >
+            CHOICES
+          </button>
+          <button
+            onClick={() => {
+              setCompletedItems([]);
+            }}
+            className="text-2xl bg-white md:text-3xl w-1/2 font-bold  text-center py-4 rounded-lg px-6"
+          >
+            RESET
+          </button>
         </div>
       </div>
     </div>
