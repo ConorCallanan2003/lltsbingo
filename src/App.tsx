@@ -20,6 +20,7 @@ const data = [
   { id: 16, value: "AUDIENCE MEMBER MAKES A WEIRD FACE", color: "#de4f4f" },
   { id: 17, value: "BOOK REVIEW AT HIGH SPEED", color: "#8033b7" },
   { id: 18, value: "TOY MAKES LOUD NOISE", color: "#8033b7" },
+  { id: 19, value: "CUTE ANIMAL", color: "#8033b7" },
 ];
 
 export default function App() {
@@ -29,7 +30,9 @@ export default function App() {
     JSON.parse(localStorage.getItem("chosenItems") || "[]")
   );
 
-  const [completedItems, setCompletedItems] = useState<number[]>([]);
+  const [completedItems, setCompletedItems] = useState<number[]>(
+    JSON.parse(localStorage.getItem("completedItems") || "[]")
+  );
 
   const [showModal, setShowModal] = useState(
     (JSON.parse(localStorage.getItem("chosenItems") || "[]") as number[])
@@ -51,6 +54,25 @@ export default function App() {
       const newList = prev.filter((value) => value !== item);
       localStorage.setItem("chosenItems", JSON.stringify(newList));
       return newList;
+    });
+  };
+
+  const addCompletedItem = (item: number) => {
+    if (completedItems.length < 9) {
+      localStorage.setItem(
+        "completedItems",
+        JSON.stringify([...completedItems, item])
+      );
+      setCompletedItems(
+        JSON.parse(localStorage.getItem("completedItems") || "[]")
+      );
+    }
+  };
+
+  const resetCompletedItem = () => {
+    setCompletedItems(() => {
+      localStorage.setItem("completedItems", "[]");
+      return [];
     });
   };
 
@@ -144,14 +166,7 @@ export default function App() {
                   )}
                   <div
                     key={item.id}
-                    onClick={() =>
-                      setCompletedItems((prev) => {
-                        if (prev.includes(item.id)) {
-                          return prev.filter((p) => p !== item.id);
-                        }
-                        return [...prev, item.id];
-                      })
-                    }
+                    onClick={() => addCompletedItem(item.id)}
                     className={`px-4 border-[10px] md:border-[20px] border-green-600 bg-red-600 w-[110px] h-[110px] md:h-[250px] md:w-[250px] md:text-2xl text-xs text-center font-bold md:hover:scale-105 flex items-center justify-center select-none cursor-pointer rounded-2xl text-white duration-200 opacity-90 md:hover:opacity-100`}
                   >
                     {item.value}
@@ -231,7 +246,7 @@ export default function App() {
           </button>
           <button
             onClick={() => {
-              setCompletedItems([]);
+              resetCompletedItem();
             }}
             className="text-2xl bg-white md:text-3xl w-1/2 font-bold  text-center py-4 rounded-lg px-6"
           >
