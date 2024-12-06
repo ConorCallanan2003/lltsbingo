@@ -167,7 +167,7 @@ export default function App() {
               }}
               className="absolute bg-transparent w-full h-full z-20 backdrop-blur-sm top-0 bottom-0 right-0 left-0 flex justify-center items-center"
             >
-              <div className="flex flex-col  w-5/6">
+              <div className="flex flex-col md:w-[500px] w-5/6">
                 <div className="w-full -mb-4 pb-4 flex items-center justify-center pt-2 bg-gray-200 text-black cursor-pointer text-2xl font-bold rounded-t-2xl">
                   <h1 className="text-4xl pl-1 font-bold pb-3 pt-2">
                     CARDS ({chosenValues.length}/9)
@@ -175,7 +175,7 @@ export default function App() {
                 </div>
                 <div
                   onClick={(e) => e.stopPropagation()}
-                  className="md:w-[500px] w-full h-[500px] overflow-scroll z-40 p-1 bg-white rounded-xl shadow-2xl flex flex-col gap-1"
+                  className="md:w-[500px] w-full h-[500px] overflow-scroll z-40 p-1 bg-white rounded-xl flex flex-col gap-1"
                 >
                   {data.map((item) => {
                     const chosen = chosenValues.includes(item.id);
